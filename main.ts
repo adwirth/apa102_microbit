@@ -224,7 +224,7 @@ namespace apa102 {
         let instance = p.instance();
         let [r, g, b, br] = instance.get_pix_xy(x, y)
         if (br == 0)
-            instance.set_pix_xy(x, y, 1., 1., 1., 1.)
+            instance.set_pix_xy(x, y, 255, 255, 255, 1.)
         else
             instance.set_pix_xy(x, y, 0., 0., 0., 0.)
         instance.show();
@@ -252,28 +252,20 @@ namespace apa102 {
      * Line between X1, Y1 and X2, Y2
      */
     //% blockId=apa102line
-    //% block="line from $x1 $y1 to $x2 $y2"
+    //% block="line from $x1, $y1 to $x2, $y2"
     //% x1.min=0 x1.max=15
     //% y1.min=0 y1.max=15
     //% x2.min=0 x2.max=15
     //% y2.min=0 y2.max=15
     export function line(x1: number, y1: number, x2: number, y2: number): void {
         let instance = p.instance();
-        if (Math.abs(x2 - x1) >= Math.abs(y2 - y1)) {
-            if (x2 - x1 == 0) return;
-            let eps = 1E-2;
-            let i = 0.0;
-            for (i = x1; Math.abs(i - x2) < eps; i = i + 0.1 * (Math.sign(x2 - x1))) {
-                    let j = y1 + (y2 - y1) * (i - x1) / (x2 - x1);
-                    instance.set_pix_xy(i, j, 255., 255., 255., 1.);
-            }
+        let stepnum = 16.0;
+        let xstep = (x2 - x1) / stepnum;
+        let ystep = (y2 - y1) / stepnum;
+        for (let i = 0.0; i < stepnum; i = i + 1.0){
+            instance.set_pix_xy(x1 + i * xstep, y1 + i * ystep, 255., 255., 255., 1.);
         }
-        else {
-            for (let i = y1; i != y2; i = i + Math.sign(y2 - y1)) {
-                let j = x1 + (x2 - x1) * (i - y1) / (y2 - y1);
-                instance.set_pix_xy(j, i, 255., 255., 255., 1.);
-            }
-        }
+ 
         instance.show();
     }
 
