@@ -26,7 +26,7 @@ namespace apa102 {
         private init_pixels(): number[][] {
             let pixel_list: number[][] = [];
             for (let i = 0; i < this.NUM_PIXELS; i++) {
-                pixel_list.push([0, 0, 0, this.BRIGHTNESS]);
+                pixel_list.push([100, 1, 1, this.BRIGHTNESS]);
             }
             return pixel_list;
         }
@@ -117,8 +117,8 @@ namespace apa102 {
             } else {
                 brightness = Math.trunc(31.0 * brightness) & 0b11111
             }
-            this.pixels[x] = [0, 0, 0, 0]
-            // pixels[x] = [rr & 0xff, gg & 0xff, bb & 0xff, brightness]
+            //this.pixels[x] = [0, 0, 0, 0]
+            this.pixels[x] = [rr & 0xff, gg & 0xff, bb & 0xff, brightness]
         }
         
 
@@ -177,12 +177,13 @@ namespace apa102 {
     //% y.min=0 y.max=15
     export function plotAt(x: number, y: number): void {
         let instance = p.instance(); // Get or create instance
-        console.log("NUM_PIXELS_X: " + instance.NUM_PIXELS_X);
-        led.plot(x, y);
-        instance.set_brightness_gradient();
-        instance.show();
+        //console.log("NUM_PIXELS_X: " + instance.NUM_PIXELS_X);
+        //led.plot(x, y);
+        //instance.set_brightness_gradient();
+        //instance.show();
         basic.pause(500);
-        instance.set_brightness_inv_gradient();
+       // instance.set_brightness_inv_gradient();
+        instance.set_all_rand();
         instance.show();
 
     }
