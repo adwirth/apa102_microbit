@@ -188,16 +188,30 @@ namespace apa102 {
     //% x.min=0 x.max=15
     //% y.min=0 y.max=15
     export function plotAt(x: number, y: number): void {
-        let instance = p.instance(); // Get or create instance
+        let instance = p.instance();
         instance.set_pix_xy(x, y, 255., 255., 255., 1.)
         instance.show();
     }
 
+    /**
+     * Paint random image
+     */
     //% blockId=apa102fullrandom
-    //% block="Randomize pixels"
+    //% block="Paint random image"
     export function fullRandom(): void {
-        let instance2 = p.instance(); // Get or create instance
-        instance2.set_all_rand();
-        instance2.show();
+        let instance = p.instance();
+        instance.set_all_rand();
+        instance.show();
+    }
+
+    /**
+     * Clear image
+     */
+    //% blockId=apa102clearimage
+    //% block="Clear image"
+    export function clearImage(): void {
+        let instance = p.instance();
+        instance.clear();
+        instance.show();
     }
 }
