@@ -1,6 +1,4 @@
 
-> Open this page at [https://cicakukac.github.io/apa102/](https://cicakukac.github.io/apa102/)
-
 ## Use as Extension
 
 This repository can be added as an **extension** in MakeCode.
