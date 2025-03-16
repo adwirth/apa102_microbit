@@ -183,15 +183,21 @@ namespace apa102 {
     /**
      * Plot a pixel at position X, Y
      */
+    //% blockId=apa102plotat
+    //% block="plot at $x $y"
+    //% x.min=0 x.max=15
+    //% y.min=0 y.max=15
     export function plotAt(x: number, y: number): void {
         let instance = p.instance(); // Get or create instance
         instance.set_pix_xy(x, y, 1., 1., 1., 1.)
         instance.show();
     }
 
+    //% blockId=apa102fullrandom
+    //% block="Randomize pixels"
     export function fullRandom(): void {
-        let instance = p.instance(); // Get or create instance
-        instance.set_all_rand();
-        instance.show();
+        let instance2 = p.instance(); // Get or create instance
+        instance2.set_all_rand();
+        instance2.show();
     }
 }
