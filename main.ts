@@ -97,6 +97,10 @@ namespace apa102 {
             this.set_pix(this.xy_to_num(x,y), r, g, b, brightness)
         }
 
+        public get_pix_xy(x: number, y: number) {
+            return this.get_pix(this.xy_to_num(x, y))
+        }
+
         //  Update colour and brightness values from pixels list
         //  Call this procedure to update the display
         public show() {
@@ -129,10 +133,13 @@ namespace apa102 {
             } else {
                 brightness = Math.trunc(31.0 * brightness) & 0b11111
             }
-            //this.pixels[x] = [0, 0, 0, 0]
             this.pixels[x] = [rr & 0xff, gg & 0xff, bb & 0xff, brightness]
         }
-        
+
+        //  Get the colour and brightness of an individual pixel
+        public get_pix(x: number) {
+            return this.pixels[x]
+        } 
 
         //  Set all of the pixels in the chain to the colour and brightness (optional)
         public set_all(r: number, g: number, b: number, brightness: number = null) {
@@ -194,10 +201,76 @@ namespace apa102 {
     }
 
     /**
+     * Unplot a pixel at position X, Y
+     */
+    //% blockId=apa102unplotat
+    //% block="unplot at $x $y"
+    //% x.min=0 x.max=15
+    //% y.min=0 y.max=15
+    export function unplotAt(x: number, y: number): void {
+        let instance = p.instance();
+        instance.set_pix_xy(x, y, 0., 0., 0., 0.)
+        instance.show();
+    }
+
+    /**
+     * Toggle a pixel at position X, Y
+     */
+    //% blockId=apa102toggle
+    //% block="toggle at $x $y"
+    //% x.min=0 x.max=15
+    //% y.min=0 y.max=15
+    export function toggleAt(x: number, y: number): void {
+        let instance = p.instance();
+        let [r, g, b, br] = instance.get_pix_xy(x, y)
+        if (br == 0)
+            instance.set_pix_xy(x, y, 1., 1., 1., 1.)
+        else
+            instance.set_pix_xy(x, y, 0., 0., 0., 0.)
+        instance.show();
+    }
+
+    /**
+     * Colour a pixel at position X, Y
+     */
+    //% blockId=apa102colourat
+    //% block="colour at $x $y"
+    //% x.min=0 x.max=15
+    //% y.min=0 y.max=15
+    //% r.min=0 r.max=255
+    //% g.min=0 g.max=255
+    //% b.min=0 b.max=255
+    //% br.min=0 br.max=7
+    export function colourAt(x: number, y: number, r: number, g: number, b: number, br:number): void {
+        let instance = p.instance();
+        instance.set_pix_xy(x, y, r, g, b, br)
+        instance.show();
+    }
+
+
+    /**
+     * Line between X1, Y1 and X2, Y2
+     */
+    //% blockId=apa102line
+    //% block="line from $x1 $y1 to $x2 $y2"
+    //% x1.min=0 x1.max=15
+    //% y1.min=0 y1.max=15
+    //% x2.min=0 x2.max=15
+    //% y2.min=0 y2.max=15
+    export function line(x1: number, y1: number, x2: number, y2: number): void {
+        let instance = p.instance();
+        for (let i = x1; i <= x2; i = i + Math.sign(x2 - x1)){
+                let j = y1 + (y2 - y1) * (i - x1) / (x2 - x1);
+                plotAt(i, j);
+        }
+        instance.show();
+    }
+
+    /**
      * Paint random image
      */
     //% blockId=apa102fullrandom
-    //% block="Paint random image"
+    //% block="paint random image"
     export function fullRandom(): void {
         let instance = p.instance();
         instance.set_all_rand();
@@ -208,10 +281,26 @@ namespace apa102 {
      * Clear image
      */
     //% blockId=apa102clearimage
-    //% block="Clear image"
+    //% block="clear image"
     export function clearImage(): void {
         let instance = p.instance();
         instance.clear();
         instance.show();
+    }
+
+    /**
+     * Get a pixel state at position X, Y
+     */
+    //% blockId=apa102point
+    //% block="point at $x $y"
+    //% x.min=0 x.max=15
+    //% y.min=0 y.max=15
+    export function pointAt(x: number, y: number): boolean {
+        let instance = p.instance();
+        let [r, g, b, br] = instance.get_pix_xy(x, y)
+        if (br == 0)
+            return false;
+        else
+            return true;
     }
 }
