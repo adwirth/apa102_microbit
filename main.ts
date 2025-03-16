@@ -261,7 +261,7 @@ namespace apa102 {
         let instance = p.instance();
         for (let i = x1; i <= x2; i = i + Math.sign(x2 - x1)){
                 let j = y1 + (y2 - y1) * (i - x1) / (x2 - x1);
-                plotAt(i, j);
+                instance.set_pix_xy(i, j, 255., 255., 255., 1.);
         }
         instance.show();
     }
