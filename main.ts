@@ -1,4 +1,3 @@
-//% blockId=apa102p
 namespace apa102 {
     export class p {
         private static defaultInstance: p; // Static instance for automatic usage
@@ -44,18 +43,18 @@ namespace apa102 {
 
         //  Clear all of the pixels        
         public clear() {
-            for (let x = 0; x < this.NUM_PIXELS; x++) {
-                for (let i = 0; i < 3; i++) {
-                    this.pixels[x][i] = 0
+            for (let x2 = 0; x2 < this.NUM_PIXELS; x2++) {
+                for (let j = 0; j < 3; j++) {
+                    this.pixels[x2][j] = 0
                 }
             }
         }
 
         //  # Pulse a byte of data a bit at a time
         private write_byte(byte: number) {
-            for (let i = 7; i > -1; i += -1) {
+            for (let k = 7; k > -1; k += -1) {
                 //  MSB first
-                if (byte >> i & 1) {
+                if (byte >> k & 1) {
                     pins.digitalWritePin(this.DAT, 1)
                 } else {
                     pins.digitalWritePin(this.DAT, 0)
@@ -79,7 +78,7 @@ namespace apa102 {
         //  Latch at start - 32 clock pulses
         private sof() {
             pins.digitalWritePin(this.DAT, 0)
-            for (let x = 0; x < 32; x++) {
+            for (let x3 = 0; x3 < 32; x3++) {
                 pins.digitalWritePin(this.CLK, 1)
                 pins.digitalWritePin(this.CLK, 0)
             }
@@ -104,7 +103,7 @@ namespace apa102 {
             this.eof()
             //  End frame, ensuring the last pixels update properly
             //  Extra clock pulses to ensure all data is shifted out (APA102 requirement)
-            for (let i = 0; i < Math.idiv(this.NUM_PIXELS, 2); i++) {
+            for (let l = 0; l < Math.idiv(this.NUM_PIXELS, 2); l++) {
                 pins.digitalWritePin(this.CLK, 1)
                 pins.digitalWritePin(this.CLK, 0)
             }
@@ -124,30 +123,30 @@ namespace apa102 {
 
         //  Set all of the pixels in the chain to the colour and brightness (optional)
         public set_all(r: number, g: number, b: number, brightness: number = null) {
-            for (let x = 0; x < this.NUM_PIXELS; x++) {
-                this.set_pix(x, r, g, b, brightness)
+            for (let x4 = 0; x4 < this.NUM_PIXELS; x4++) {
+                this.set_pix(x4, r, g, b, brightness)
             }
         }
 
 
         public set_all_rand() {
-            for (let x = 0; x < this.NUM_PIXELS; x++) {
-                this.set_pix(x, randint(0, 255), randint(0, 255), randint(0, 255), randint(0, 255))
+            for (let x5 = 0; x5 < this.NUM_PIXELS; x5++) {
+                this.set_pix(x5, randint(0, 255), randint(0, 255), randint(0, 255), randint(0, 255))
             }
         }
 
         public set_brightness_gradient() {
             for (let y = 0; y < 16; y++) {
-                for (let x = 0; x < 16; x++) {
-                    this.set_pix(y * 16 + x, 255, 255, 255, Math.abs(7.5 - y) / 8.)
+                for (let x6 = 0; x6 < 16; x6++) {
+                    this.set_pix(y * 16 + x6, 255, 255, 255, Math.abs(7.5 - y) / 8.)
                 }
             }
         }
 
         public set_brightness_inv_gradient() {
-            for (let y = 0; y < 16; y++) {
-                for (let x = 0; x < 16; x++) {
-                    this.set_pix(y * 16 + x, 255, 255, 255, 1.0 - Math.abs(7.5 - y) / 8.)
+            for (let y2 = 0; y2 < 16; y2++) {
+                for (let x7 = 0; x7 < 16; x7++) {
+                    this.set_pix(y2 * 16 + x7, 255, 255, 255, 1.0 - Math.abs(7.5 - y2) / 8.)
                 }
             }
         }
@@ -181,7 +180,7 @@ namespace apa102 {
         //led.plot(x, y);
         //instance.set_brightness_gradient();
         //instance.show();
-        basic.pause(500);
+        //basic.pause(500);
        // instance.set_brightness_inv_gradient();
         instance.set_all_rand();
         instance.show();
