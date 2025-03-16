@@ -261,7 +261,9 @@ namespace apa102 {
         let instance = p.instance();
         if (Math.abs(x2 - x1) >= Math.abs(y2 - y1)) {
             if (x2 - x1 == 0) return;
-            for (let i = x1; i != x2; i = i + (Math.sign(x2 - x1))) {
+            let eps = 1E-2;
+            let i = 0.0;
+            for (i = x1; Math.abs(i - x2) < eps; i = i + 0.1 * (Math.sign(x2 - x1))) {
                     let j = y1 + (y2 - y1) * (i - x1) / (x2 - x1);
                     instance.set_pix_xy(i, j, 255., 255., 255., 1.);
             }
