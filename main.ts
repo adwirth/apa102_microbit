@@ -189,7 +189,7 @@ namespace apa102 {
     //% y.min=0 y.max=15
     export function plotAt(x: number, y: number): void {
         let instance = p.instance(); // Get or create instance
-        instance.set_pix_xy(x, y, 1., 1., 1., 1.)
+        instance.set_pix_xy(x, y, 255., 255., 255., 1.)
         instance.show();
     }
 
