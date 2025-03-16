@@ -84,6 +84,19 @@ namespace apa102 {
             }
         }
 
+        public xy_to_num(x: number, y: number)
+        {
+            if (y % 2 == 0)
+                return x + y * this.NUM_PIXELS_X
+            else
+                return this.NUM_PIXELS_X - x - 1 + y * this.NUM_PIXELS_X
+        }
+
+        public set_pix_xy(x: number, y: number, r: number, g: number, b: number, brightness: number)
+        {
+            this.set_pix(this.xy_to_num(x,y), r, g, b, brightness)
+        }
+
         //  Update colour and brightness values from pixels list
         //  Call this procedure to update the display
         public show() {
@@ -170,20 +183,15 @@ namespace apa102 {
     /**
      * Plot a pixel at position X, Y
      */
-    //% blockId=apa102plotat
-    //% block="plot at $x $y"
-    //% x.min=0 x.max=15
-    //% y.min=0 y.max=15
     export function plotAt(x: number, y: number): void {
         let instance = p.instance(); // Get or create instance
-        //console.log("NUM_PIXELS_X: " + instance.NUM_PIXELS_X);
-        //led.plot(x, y);
-        //instance.set_brightness_gradient();
-        //instance.show();
-        //basic.pause(500);
-       // instance.set_brightness_inv_gradient();
+        instance.set_pix_xy(x, y, 1., 1., 1., 1.)
+        instance.show();
+    }
+
+    export function fullRandom(): void {
+        let instance = p.instance(); // Get or create instance
         instance.set_all_rand();
         instance.show();
-
     }
 }
