@@ -259,11 +259,16 @@ namespace apa102 {
     //% y2.min=0 y2.max=15
     export function line(x1: number, y1: number, x2: number, y2: number): void {
         let instance = p.instance();
-        let stepnum = 16.0;
+        const stepnum = 32.0;
         let xstep = (x2 - x1) / stepnum;
         let ystep = (y2 - y1) / stepnum;
         for (let i = 0.0; i < stepnum; i = i + 1.0){
-            instance.set_pix_xy(x1 + i * xstep, y1 + i * ystep, 255., 255., 255., 1.);
+            //instance.set_pix_xy(x1 + i * xstep, y1 + i * ystep, 255., 255., 255., 1.);
+            //serial.writeNumber((x1 + i * xstep));
+            let xcurr = Math.round(x1 + i * xstep);
+            let ycurr = Math.round(y1 + i * ystep);
+            instance.set_pix_xy(xcurr, ycurr, 255., 255., 255., 1.);
+            // plotAt(xcurr, ycurr);
         }
  
         instance.show();
