@@ -261,7 +261,7 @@ namespace apa102 {
         let instance = p.instance();
         if (Math.abs(x2 - x1) >= Math.abs(y2 - y1)) {
             if (x2 - x1 == 0) return;
-            for (let i = x1; i <= x2; i = i + Math.sign(x2 - x1)) {
+            for (let i = x1; i <= x2; i = i + (Math.sign(x2 - x1))) {
                     let j = y1 + (y2 - y1) * (i - x1) / (x2 - x1);
                     instance.set_pix_xy(i, j, 255., 255., 255., 1.);
             }
@@ -269,7 +269,7 @@ namespace apa102 {
         else {
             for (let i = y1; i <= y2; i = i + Math.sign(y2 - y1)) {
                 let j = x1 + (x2 - x1) * (i - y1) / (y2 - y1);
-                instance.set_pix_xy(i, j, 255., 255., 255., 1.);
+                instance.set_pix_xy(j, i, 255., 255., 255., 1.);
             }
         }
         instance.show();
